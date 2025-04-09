@@ -7,13 +7,13 @@ React Lifecycle নিয়ে ঘাটাঘাটি করতে যেয�
 🔨 Mounting:
 1. constructor()
 2. getDerivedStateFromProps()
-3. render() 
+3. render() - "The process of converting your code (JSX, HTML, etc.) into real DOM elements that are displayed in the browser."
 এবং render হবার পর যখন DOM মাউন্ট হয় তখন 
 4. componentDidMount()
 
 🔄 Updating:
 1. getDerivedStateFromProps()
-2. render()
+2. render() - "The process of converting your code (JSX, HTML, etc.) into real DOM elements that are displayed in the browser."
 3. componentDidUpdate() 
 যদিও আরো কিছু আছে মেথড।
 
