@@ -1,0 +1,111 @@
+📊 Data Integrity and Constraints in Database 🔒
+ডাটা ইন্টিগ্রিটি দ্বারা মূলত বোঝায় ডাটা তার সম্পূর্ণ লাইফসাইকেল জুড়ে কতটুকু Accurate, Consistent, and Complete.
+অর্থাৎ এর দ্বারা আমরা ডাটার স্বচ্ছতা ও নির্ভরযোগ্যতা বুঝি।
+ডাটা ইন্টিগ্রিটি বোঝাতে আমরা সাধারণত এই ধরনগুলো ব্যবহার করি:
+
+1️⃣ Entity Integrity
+👉 টেবিলের প্রতিটি Row ইউনিক থাকবে এটা নিশ্চিত করে।
+✅ আমরা Primary Key দিয়ে এটা নিশ্চিত করি, কারন সেটা  ভ্যালুকে ইউনিক এবং Not Null সেট করে। 
+🧾 Example:
+CREATE TABLE Students (
+  StudentNumber INT PRIMARY KEY,
+  Name VARCHAR(100)
+);
+
+⚠️কলাম যদি Primary key ছাড়াও UNIQUE এবং Not Null থাকে তাহলেও কিন্তু এটা Entity Integrity নিশ্চিত করবে না।
+
+
+2️⃣ Referential Integrity
+👉 সম্পর্কযুক্ত টেবিলগুলোর মধ্যে Consistency বজায় রাখে।
+✅ আমরা এটা Foreign Key দিয়ে নিশ্চিত করি।
+🧾 Example:
+CREATE TABLE Departments (
+  DeptID INT PRIMARY KEY
+);
+
+CREATE TABLE Employees (
+  EmpID INT PRIMARY KEY,
+  DeptID INT,
+  FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+⚠️এখানে DeptID যদি ডিলেট করতে যাই তাহলে এটা সম্ভব না, কারন তাতে Employees টেবিলের ডাটা DeptID ছাড়া থাকবে। এটা valid না। 
+⚠️অন্যদিকে নতুন কোনো Employee ও এড করা যাবে না নতুন কোনো DeptID দিয়ে যদি না সেই DeptID টা Departments টেবিলে থাকে। সেটা valid নাহ। 
+এভাবেই before(⚠️ above), during(Using cascade or null),after any operation, Consistency বজায় রাখে Foreign key পরষ্পর সম্পর্ক যুক্ত টেবিলের মধ্যে। এটাই মূলত Referential Integrity.
+
+
+3️⃣ Domain Integrity (Built-in Rules)
+👉 ডাটার কোন ধরনের type এবং format একটা কলামে allowed এটার manual predefined রুলস প্রদান করে এবং এন্ট্রি করা ডাটা গুলো এই predefined রুলস মেনে valid হয় কিনা সেটা নিশ্চিত করে।
+✅ এটা আমরা system level constraint দিয়ে নিশ্চিত করি like: INT, VARCHAR, DATE, NOT NULL, CHECK etc.
+🧾 Example:
+CREATE TABLE Customers (
+  Age INT CHECK (Age >= 0),
+  Email VARCHAR(100) NOT NULL
+);
+
+
+4️⃣ User Defined Integrity
+👉 User Defined Integrity মানে এমন Validation Rule যা আমরা নিজেরা বানাই, কারণ এগুলো কোনো built-in constraint দিয়ে করা যায় না।
+🎯 ধরি আমার একটা Business Rule আছে:
+- একজন Customer একদিনে একবারই order দিতে পারবে।
+- অথবা, একজন Employee এক মাসে ৩ টার বেশি overtime নিতে পারবে না।
+✅ এসব কন্ডিশন SQL এর Built-in constraint দিয়ে enforce করা যায় না সরাসরি। তখন আমরা এগুলো Trigger, Stored procedure, Application level handling দিয়ে করি।
+
+🔹 Built-in constraint মানে হলো: PRIMARY KEY, FOREIGN KEY, CHECK, NOT NULL ইত্যাদি।
+🔹 কিন্তু অনেক সময় আমাদের কিছু Custom Rule লাগতে পারে, যেটা Business Logic এর উপর ভিত্তি করে হয়। 
+🧾 Example:
+CREATE TABLE Employees (
+  EmpID INT PRIMARY KEY,
+  Name VARCHAR(100),
+  Age INT,
+  Salary DECIMAL(10,2),
+  CHECK (
+    (Age BETWEEN 18 AND 30 AND Salary >= 15000)
+    OR
+    (Age BETWEEN 31 AND 60 AND Salary >= 25000)
+  )
+);
+এই CHECK constraint টা কিন্তু আমরা নিজেরা Logic দিয়ে বানিয়েছি — এটা User Defined Integrity.
+
+
+
+
+✳️ এখন আমরা যা এতক্ষণ বলছিলাম—Constraints—সেটা একটু সংক্ষেপে এবং পরিষ্কারভাবে বাংলা ভাষায় দেখে নিই:
+Constraints হলো কিছু নিয়ম (rules) যা ডেটাবেস টেবিলের কলামগুলোতে ডেটার Validity, Accuracy এবং Consistency নিশ্চিত করে। That's what actually the data integrity.
+আমরা যে constraint গুলো সাধারণত ব্যবহার করি:
+- PRIMARY KEY
+- FOREIGN KEY
+- UNIQUE
+- NOT NULL
+- CHECK
+- DEFAULT
+
+🧾 Combined Example:-
+CREATE TABLE Roles (
+  RoleID INT PRIMARY KEY,
+  RoleName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Users (
+  ID INT PRIMARY KEY,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  Age INT CHECK (Age >= 18),
+  CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  RoleID INT,
+  FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
+);
+
+
+⚠️ Threats to Data Integrity
+🔍 Threats to Data Integrity refer to the risks that make data inaccurate, incomplete, or inconsistent, harming the reliability of the system.
+
+Some common threats:
+🧑‍💻 Human Error: ভুল ইনপুট বা ভুলভাবে ডাটা মুছে ফেলা/আপডেট করা
+🐞 Software Bugs: কোডের ভুলে ডাটা corrupt হওয়া
+🛡️ Cyber Attacks: হ্যাকিং এর মাধ্যমে ডাটা বদলানো বা মুছে ফেলা
+💽 Hardware Failure: Disk crash, Power failure ইত্যাদি
+🚫 No Constraints: Validation না থাকলে ভুল ডাটা ঢুকে যায়
+🔄 Concurrency Issues: একাধিক user একসাথে update করে conflict করে
+💾 Bad Backup: ডাটা restore করা না যাওয়া
+🌐 Transfer Errors: API/CSV এর মাধ্যমে ডাটা incomplete আসা
+🔐 Unauthorized Access: Unwanted user ডাটা modify করে ফেলে
+⚖️ System Mismatch: Unit/Format mismatch → inconsistent ডাটা
