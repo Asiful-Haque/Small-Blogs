@@ -109,3 +109,14 @@ Some common threats:
 🌐 Transfer Errors: API/CSV এর মাধ্যমে ডাটা incomplete আসা
 🔐 Unauthorized Access: Unwanted user ডাটা modify করে ফেলে
 ⚖️ System Mismatch: Unit/Format mismatch → inconsistent ডাটা
+
+
+
+Integrity	                নিশ্চিত করে	                                  কিভাবে
+Entity Integrity---------প্রতিটি row ইউনিক-----------------------------PRIMARY KEY
+Referential Integrity----টেবিলের মধ্যে সম্পর্ক valid---------------------- FOREIGN KEY
+Domain Integrity---------ডাটা সঠিক type/format এ আছে কিনা-------------	INT, VARCHAR, CHECK
+User Defined Integrity---Extra Custom Logic follow করছে কিনা--------	CHECK (complex), TRIGGER, PROCEDURE, APP Logic
+
+
+
