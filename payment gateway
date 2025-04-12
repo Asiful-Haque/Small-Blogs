@@ -1,0 +1,6 @@
+Service	                        Type	                            Supports
+bKash API	                     MFS only	                        🟢 bKash only
+Nagad API	                     MFS only	                        🟢 Nagad only
+SSLCommerz	                   Payment Gateway (BD)	            🟢 bKash, 🟢 Nagad, 🟢 Visa, 🟢 MasterCard, 🟢 EMI, 🟢 Internet Banking
+ShurjoPay	                     Payment Gateway (BD)	            Same as above
+Stripe / PayPal	               International Gateway	          🟢 Global Card Payments (Not local BD MFS)
