@@ -4,3 +4,14 @@ Nagad API	                     MFS only	                        🟢 Nagad only
 SSLCommerz	                   Payment Gateway (BD)	            🟢 bKash, 🟢 Nagad, 🟢 Visa, 🟢 MasterCard, 🟢 EMI, 🟢 Internet Banking
 ShurjoPay	                     Payment Gateway (BD)	            Same as above
 Stripe / PayPal	               International Gateway	          🟢 Global Card Payments (Not local BD MFS)
+
+
+
+1. Understand the Flow (Conceptual)
+Before coding, understand how the process works:
+
+1. User clicks "Pay" on your website
+2. Redirect or popup opens from the payment gateway
+3. User completes payment (e.g., bKash, Nagad, Card)
+4. Gateway sends a response (success/fail) to your server (NestJS)
+5. You verify the payment, update the DB, and show success to user
