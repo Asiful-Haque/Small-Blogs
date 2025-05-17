@@ -1,0 +1,47 @@
+S — Single Responsibility Principle (SRP)
+A class should have only one reason to change, meaning it should have only one job or responsibility.
+Example: A User class handles user data; a UserRepository handles database storage, not both.
+
+
+O — Open/Closed Principle (OCP)
+Software entities (classes, functions) should be open for extension but closed for modification.
+Example: Add new features by extending classes, not by changing existing code.
+[[[[[[[[[[[
+          Imagine you have a recipe book (base class) with a pancake recipe (method).
+          1. Modifying existing code = going back and changing the pancake recipe in the book — everyone who uses the book sees a different recipe now.
+          2. Extending (overriding) = you add a new recipe for blueberry pancakes in a new section (derived class), without changing the original pancake recipe.
+          Only overriding is not the way to make ocp.
+]]]]]]]]]]
+
+
+L — Liskov Substitution Principle (LSP)  - ✅***Pakhi class***✅
+Only implement functionality in subclasses that actually support it. Don’t force a subclass to override a method that doesn’t make sense for it.
+[[[[[[[[[[[
+          Let’s say you have a class Bird with a method fly().
+          If you create a subclass Ostrich and in real orstrich cannot fly, but you still override fly() with an error or do nothing, that’s a violation of LSP.
+          You're saying "Ostrich is a Bird", but then suddenly fly() doesn’t work anymore — this breaks expectations.
+]]]]]]]]]]
+so, what should we do::: 🎯 
+split Bird and Flyable class....Then the birds that can fly --> They will extend both bird,flyable if needed.
+                                Then ostrich that cant fly  ---> It will only use Bird..So no break, no error 🎯 
+
+
+
+I - Interface Segregation Principle (ISP) - ✅***Printer interface***✅
+"Don't force a class to sign a contract (interface) that includes methods it doesn't need." - Its similar like violation of Liskov..
+Don't put too many responsibilities in one interface.
+Instead, split large interfaces into smaller, more specific ones so that classes only implement what they need.
+[[[[[[[[[[[
+          A Machine has print(), scan(), fax() 
+          so, 
+          class IMachine {
+          public:
+              virtual void print() = 0;
+              virtual void scan() = 0;
+              virtual void fax() = 0;
+          };
+          now older printers can only print(), as its interface..they overrides 3 of them. we are forcing OldPrinter to implement scan() and fax() it doesn't support.
+          But its not acceptable..it is also similar like violating liskov
+]]]]]]]]]]
+so, what should we do::: 🎯 
+Seperate interface into 3 seperate interface.. wheover needs which ..they will get them...modern will get 3 , older printer will get 1.
