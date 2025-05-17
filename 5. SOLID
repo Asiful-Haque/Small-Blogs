@@ -45,3 +45,72 @@ Instead, split large interfaces into smaller, more specific ones so that classes
 ]]]]]]]]]]
 so, what should we do::: 🎯 
 Seperate interface into 3 seperate interface.. wheover needs which ..they will get them...modern will get 3 , older printer will get 1.
+
+
+
+D - Dependency Inversion Principle (DIP)
+Don’t hard-code dependencies (e.g., one class directly creating or depending on another).
+Instead, use interfaces or abstract classes so high-level logic depends on what should be done — not how.
+[[[[[[[[[[[
+          class LightBulb {
+          public:
+              void turnOn() { cout << "LightBulb ON\n"; }
+              void turnOff() { cout << "LightBulb OFF\n"; }
+          };
+          
+          class Switch {
+              LightBulb bulb; // tightly coupled to LightBulb
+          public:
+              void operate() {
+                  bulb.turnOn(); // fixed behavior
+              }
+          };
+
+          Switch depends on the concrete LightBulb.
+          What if you want to switch a fan instead? You’d have to modify the Switch class — violating Open/Closed and DIP.
+          mane ekhon jodi fan er switch lage amar..tokhon ki korbo..abar jhamela...switch re modify kore use kora lagbe
+]]]]]]]]]]
+so, what should we do::: 🎯 
+
+*******Switch akhon depend korte hobe abstraction er upor**************
+Age korsilo only Lightbulb er upor - Jetai problem occur korse
+
+✅ DIP Ensures:
+High-level (Switch) doesn’t directly depend on low-level (LightBulb, Fan).
+Both depend on an abstraction (Switchable).
+|
+|
+|>>>>>>>
+// Abstract device interface
+class Switchable {
+public:
+    virtual void turnOn() = 0;
+    virtual void turnOff() = 0;
+};
+
+// Concrete implementations
+class LightBulb : public Switchable {
+public:
+    void turnOn() override { cout << "LightBulb ON\n"; }
+    void turnOff() override { cout << "LightBulb OFF\n"; }
+};
+
+class Fan : public Switchable {
+public:
+    void turnOn() override { cout << "Fan ON\n"; }
+    void turnOff() override { cout << "Fan OFF\n"; }
+};
+
+// Switch now depends on abstraction
+class Switch {
+    Switchable* device;
+public:
+    Switch(Switchable* d) : device(d) {}
+
+    void operate() {
+        device->turnOn();  // now works with any Switchable device
+    }
+};
+
+
+
