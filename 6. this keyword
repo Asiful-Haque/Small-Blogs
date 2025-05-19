@@ -1,0 +1,20 @@
+Its a special keyword in js that indicates the object that owns the function where "this" is situated
+
+
+Function            - standalone ----> undefined in strict mode
+                                       global window in non strict mode
+
+Arrow function      - standalone ----> undefined in strict mode
+                                       global window in non strict mode
+
+
+
+
+Function            - as method(inside obj,class)  ----> its owning object/instance object (for class)
+Arrow function      - as method(inside obj,class)  ----> it will be undefined or window if not inside any other general function/method which has "this".    <<<<   Because arrow dont have this   >>>>
+                                                         so place it inside any general function to get the this value by its upper lexical scope that is the general fucntion.
+
+
+
+
+For constructor - its instance object by which it is instantiated.
