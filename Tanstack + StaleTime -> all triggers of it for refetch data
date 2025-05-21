@@ -1,0 +1,44 @@
+✅ Default Behavior of TanStack Query (React Query)
+When you don’t set staleTime, it defaults to:
+staleTime = 0
+This means:
+Data becomes stale immediately after fetching.
+React Query will refetch the data on every eligible trigger.
+
+🔁 React Query will refetch data on:
+Refocusing the browser tab
+→ refetchOnWindowFocus: true (default)
+Re-mounting the component
+→ If the query is used again and considered stale
+Reconnecting to the internet
+→ refetchOnReconnect: true (default)
+Manual refetch() call
+→ You or the app explicitly call refetch()
+Query invalidation
+→ When queryClient.invalidateQueries() is used
+Changing the queryKey
+→ React Query sees it as a new query
+Setting a refetchInterval
+→ Periodic polling (manually set)
+queryClient.refetchQueries()
+→ Programmatically trigger refetch for specific queries
+
+
+
+✅ Triggers that RESPECT staleTime
+These will NOT refetch if the data is still considered fresh (within staleTime):
+🔄 Refocusing the browser tab (refetchOnWindowFocus)
+🌐 Reconnecting to the internet (refetchOnReconnect)
+🔁 Re-mounting the component
+🔁 Query re-use (same key used again)
+✅ These triggers will only refetch if the data is stale
+(i.e., staleTime has passed)
+
+❌ Triggers that IGNORE staleTime
+These will refetch no matter what, even if the data is fresh:
+🧠 Manual refetch() calls
+🧼 Query invalidation (queryClient.invalidateQueries())
+🔑 Changing the queryKey
+⏱️ Setting a refetchInterval
+📦 Using queryClient.refetchQueries()
+❗ These triggers are manual or forceful, so they bypass staleTime.
