@@ -1,3 +1,8 @@
+Tanstack do    ------>    Shallow comparison for performance optimization like axios
+
+
+
+---------------------------------------------------------------------------------------->
 ✅ Default Behavior of TanStack Query (React Query)
 When you don’t set staleTime, it defaults to:
 staleTime = 0
