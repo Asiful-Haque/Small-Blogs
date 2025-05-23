@@ -1,0 +1,36 @@
+✅ Use WHERE                    ---------------    ❌ Cannot use aggregate functions
+→ Filters individual rows before grouping/aggregating
+Ex.
+SELECT * FROM employees
+WHERE salary > 60000;
+
+
+✅ Use HAVING with GROUP BY     ---------------    ✅ Can use aggregate functions
+→ Filters grouped/aggregated results
+→ Applies aggregate filter over the grouped part 
+Ex.
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 60000;
+
+
+✅ Use HAVING without GROUP BY     ---------------    ✅ Can use aggregate functions
+→ Applies aggregate filter over the whole table (as one group)
+Ex.
+SELECT AVG(salary) AS avg_salary
+FROM employees
+HAVING AVG(salary) > 60000;
+-> here we cant use where because that value is newly created + its newly created with aggregated way. Now read the line with ✅✅✅✅✅✅✅✅✅✅✅✅  - 2
+tar mane where amra new created value te apply korte parbo nah...seta aggregated function er catagory teo pore cz segulao newly create kore + onno way teo new create hoy...tokhon having use hobe
+
+
+
+Quick Rule:
+
+where - applied in the existing column in table ✅✅ ---- 1
+having - applied in newly created value ..through aggregate function or any other way✅✅✅✅✅✅✅✅✅✅✅✅  - 2
+
+Purpose	                              Use           	Aggregate allowed?
+Filter individual rows	              WHERE	               ❌ No
+Filter after aggregation            	HAVING	             ✅ Yes
