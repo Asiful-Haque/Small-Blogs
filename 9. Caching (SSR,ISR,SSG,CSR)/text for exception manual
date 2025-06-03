@@ -1,0 +1,38 @@
+you can cache in any rendering mode (SSR, ISR, SSG, CSR) — but how and where you cache is different for each.
+Here’s a clear breakdown:
+
+✅ SSR (Server-Side Rendering)
+
+Default: Fresh data every request (cache: 'no-store').
+
+But: You can manually implement caching:
+Memory cache (e.g., global variable, Map, lru-cache).
+External cache (e.g., Redis, Memcached).
+Edge caching (CDN, if full page or API).
+Browser cache via HTTP headers (only if returning API to client).
+
+✅ ISR (Incremental Static Regeneration)
+Built-in cache with revalidate: N.
+Auto caches the HTML page on the edge/CDN.
+Background regeneration updates the cache.
+You can also cache API data inside the fetch() call using next: { revalidate: N }.
+
+✅ SSG (Static Site Generation)
+Fully cached at build time.
+No revalidation unless you rebuild or use ISR.
+Cache is managed by Next.js/CDN automatically.
+
+✅ CSR (Client-Side Rendering)
+Fetch runs in the browser.
+You can cache using:
+TanStack Query / React Query.
+LocalStorage / SessionStorage.
+Service Workers / Cache API.
+Browser HTTP caching, controlled by API response headers (Cache-Control, etc.).
+
+🧠 Summary Table
+Rendering Mode	      Can You Cache?	         How?
+SSR	                ✅ Yes	                  Manually(memory, Redis, CDN, headers)
+ISR	                ✅ Yes	                  Automatic via revalidate
+SSG	                ✅ Yes	                  Auto at build time
+CSR	                ✅ Yes	                  TanStack, Storage, HTTP cache
