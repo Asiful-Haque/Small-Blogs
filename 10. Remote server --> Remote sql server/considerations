@@ -1,1 +1,13 @@
-fadfd
+CREATE USER 'remote_user'@'157.230.215.39' IDENTIFIED BY 'your_password';
+GRANT SELECT, INSERT, UPDATE, DELETE ON your_database.* TO 'remote_user'@'157.230.215.39';
+FLUSH PRIVILEGES;
+
+
+
+first e account create kora lagbeee
+
+
+
+List dekte caile
+SELECT User, Host FROM mysql.user;
+SHOW GRANTS FOR 'root'@'157.230.215.39';
